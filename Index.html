@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GTM Test Page</title>
+
+  <!-- GTM HEAD SNIPPET GOES HERE -->
+</head>
+<body>
+
+  <!-- GTM BODY SNIPPET GOES HERE -->
+
+  <h1>Welcome to Sinethemba's GTM Test Page</h1>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get("key");
+    const value = params.get("value");
+
+    if (key && value) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ [key]: value });
+      console.log("Pushed to dataLayer:", { [key]: value });
+    }
+  </script>
+
+</body>
+</html>
