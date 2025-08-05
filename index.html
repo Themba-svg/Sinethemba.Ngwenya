@@ -31,6 +31,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       console.log("Pushed to dataLayer:", { [key]: value });
     }
   </script>
+<button onclick="makeApiCall()">Send API Request</button>
+
+<script>
+  function makeApiCall() {
+    // Find the last object in the dataLayer that isn't a system GTM event
+    const lastPush = dataLayer.find(entry => {
+      return Object.keys(entry).some(k => k !== "gtm" && k !== "event");
+    });
+
+    if (!lastPush) {
+      console.error("No custom key-value found in dataLayer.");
+      return;
+    }
+
+    const key = Object.keys(lastPush).find(k => k !== "gtm" && k !== "event");
+    const value = lastPush[key];
+
+    const url = `https://httpbin.org/get?${key}=${value}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log("✅ API Response:", data);
+      })
+      .catch(error => {
+        console.error("❌ API Request Failed:", error);
+      });
+  }
+</script>
 
 </body>
 </html>
